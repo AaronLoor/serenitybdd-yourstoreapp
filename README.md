@@ -41,6 +41,15 @@ El proyecto incluye un archivo de características (`.feature`) escrito en Gherk
     *   "MacBook Pro"
     *   "MacBook Air"
 
+## 📊 Reportes y Resultados
+
+Serenity BDD genera documentación viva y reportes detallados tras cada ejecución. Tienes dos formas de acceder a ellos:
+*   **Acceso Directo desde la Consola:** Al finalizar la ejecución (ya sea exitosa o fallida), observa las últimas líneas en tu terminal. Serenity generará un enlace directo al reporte.
+
+* **Acceso Manual:** Si cerraste la consola, siempre puedes encontrar los archivos en la carpeta del proyecto:
+       Navega a: **target/site/serenity/**  
+       Abre el archivo index.html.
+
 ## 🚀 Instrucciones de Ejecución
 
 ### 1. Ejecución Estándar (Todos los Tests)
