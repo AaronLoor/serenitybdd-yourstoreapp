@@ -1,0 +1,51 @@
+===========================================================================
+INFORME DE HALLAZGOS Y CONCLUSIONES DE PRUEBA - YOUR STORE APP (OPENCART)
+===========================================================================
+
+FECHA: Diciembre 2025
+OBJETIVO: Automatización E2E del flujo de compra (Guest Checkout).
+ALCANCE: Búsqueda, Adición al Carrito, Checkout y Confirmación.
+
+1. HALLAZGOS DE COMPORTAMIENTO (UX/UI)
+---------------------------------------------------------------------------
+
+A. INTERFERENCIA DE ELEMENTOS FLOTANTES (BITNAMI BANNER)
+   * Hallazgo Crítico: El entorno de pruebas (opencart.abstracta.us) incluye un
+     banner de "Bitnami" fijo en la esquina inferior derecha (z-index alto).
+   * Impacto: En resoluciones estándar o modo headless, este banner intercepta
+     clics destinados a botones críticos como "Checkout" o "Confirm Order".
+   * Conclusión: La aplicación no es "Testable" en resoluciones bajas sin ajuste de viewport (1920x1080).
+
+B. SINCRONIZACIÓN ASÍNCRONA (AJAX) EN EL CARRITO
+   * Hallazgo: Al pulsar "Add to Cart", la actualización del mini-carrito en el
+     header no es inmediata. Depende de la aparición de una alerta verde
+     (.alert-success) en la parte superior.
+   * Impacto: Intentar abrir el carrito inmediatamente después del clic resulta
+     en una lista vacía.
+   * Conclusión: Es mandatorio implementar esperas explícitas ligadas a la
+     aparición de la alerta de éxito antes de proceder a la validación del carrito.
+
+2. ESTRUCTURA DEL DOM Y LOCALIZADORES
+---------------------------------------------------------------------------
+
+A. AMBIGÜEDAD EN LISTADOS DE PRODUCTOS
+   * Hallazgo: En la vista de grilla (Home/Search), los productos no poseen contenedores
+     con IDs únicos (ej. #product-123).
+   * Conclusión: La estrategia de localización debe basarse en el texto del producto
+     dentro de etiquetas `<h4>` y navegar al botón relativo mediante XPath Axes
+     (ancestor/following), lo cual es más frágil ante cambios de diseño que el uso de IDs.
+
+3. ESTABILIDAD DEL ENTORNO
+---------------------------------------------------------------------------
+*   Se observó latencia variable en la respuesta del servidor de pruebas de Abstracta,
+    especialmente en la confirmación de la orden (Paso 6).
+*   Solución implementada: Se definieron tiempos de espera (Timeouts) centralizados
+    y configurables para ajustar la tolerancia del script sin modificar el código base.
+
+4. CONCLUSIÓN FINAL
+---------------------------------------------------------------------------
+La aplicación Your Store presenta un nivel medio de complejidad para la automatización
+debido a su naturaleza asíncrona y animaciones de UI. El framework desarrollado ha
+sido blindado contra estas particularidades mediante el uso de JavaScript Executors
+para elementos obstruidos y esperas inteligentes (WaitUntil) para el manejo de estados
+de carga AJAX, logrando una ejecución estable y determinista.
