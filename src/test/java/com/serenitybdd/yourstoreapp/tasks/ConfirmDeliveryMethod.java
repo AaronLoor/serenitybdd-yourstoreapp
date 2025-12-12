@@ -21,6 +21,7 @@ public class ConfirmDeliveryMethod implements Task {
         actor.attemptsTo(
                 WaitUntil.the(CheckoutUI.BUTTON_CONTINUE_DELIVERY, isClickable())
                         .forNoMoreThan(AppConstants.Timeouts.SHORT).seconds(),
+                HideBitnamiBanner.ifPresent(),
                 Click.on(CheckoutUI.BUTTON_CONTINUE_DELIVERY)
         );
     }

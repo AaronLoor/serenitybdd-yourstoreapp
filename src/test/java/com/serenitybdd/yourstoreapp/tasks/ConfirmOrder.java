@@ -21,6 +21,7 @@ public class ConfirmOrder implements Task {
         actor.attemptsTo(
                 WaitUntil.the(CheckoutUI.BUTTON_CONFIRM_ORDER, isClickable())
                         .forNoMoreThan(AppConstants.Timeouts.SHORT).seconds(),
+                HideBitnamiBanner.ifPresent(),
                 Click.on(CheckoutUI.BUTTON_CONFIRM_ORDER)
         );
     }

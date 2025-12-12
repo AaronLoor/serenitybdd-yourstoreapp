@@ -25,6 +25,7 @@ public class FillBillingDetails implements Task {
                 WaitUntil.the(CheckoutUI.FIRST_NAME_INPUT, isVisible())
                         .forNoMoreThan(AppConstants.Timeouts.SHORT).seconds(),
 
+                HideBitnamiBanner.ifPresent(),
                 Enter.theValue(AppConstants.CustomerData.FIRST_NAME).into(CheckoutUI.FIRST_NAME_INPUT),
                 Enter.theValue(AppConstants.CustomerData.LAST_NAME).into(CheckoutUI.LAST_NAME_INPUT),
                 Enter.theValue(AppConstants.CustomerData.EMAIL).into(CheckoutUI.EMAIL_INPUT),

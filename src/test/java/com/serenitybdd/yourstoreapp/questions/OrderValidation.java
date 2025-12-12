@@ -1,6 +1,7 @@
 package com.serenitybdd.yourstoreapp.questions;
 
 import com.serenitybdd.yourstoreapp.config.AppConstants;
+import com.serenitybdd.yourstoreapp.tasks.HideBitnamiBanner;
 import com.serenitybdd.yourstoreapp.ui.ConfirmationUI;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
@@ -16,6 +17,7 @@ public class OrderValidation {
         return Task.where("{0} verifica que la orden fue exitosa con el mensaje '" + expectedMessage + "'",
                 WaitUntil.the(ConfirmationUI.SUCCESS_TITLE, isVisible())
                         .forNoMoreThan(AppConstants.Timeouts.SHORT).seconds(),
+                HideBitnamiBanner.ifPresent(),
                 Ensure.that(ConfirmationUI.SUCCESS_TITLE)
                         .text()
                         .isEqualTo(expectedMessage)

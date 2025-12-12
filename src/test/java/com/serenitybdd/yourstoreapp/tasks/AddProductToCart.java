@@ -31,6 +31,7 @@ public class AddProductToCart implements Task {
 
         actor.attemptsTo(
                 WaitUntil.the(targetButton, isVisible()).forNoMoreThan(AppConstants.Timeouts.SHORT).seconds(),
+                HideBitnamiBanner.ifPresent(),
                 Scroll.to(targetButton),
                 Click.on(targetButton),
 

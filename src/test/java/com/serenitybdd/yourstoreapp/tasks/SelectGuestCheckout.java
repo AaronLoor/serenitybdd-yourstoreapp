@@ -21,7 +21,7 @@ public class SelectGuestCheckout implements Task {
         actor.attemptsTo(
                 WaitUntil.the(CheckoutUI.GUEST_RADIO_BUTTON, isClickable())
                         .forNoMoreThan(AppConstants.Timeouts.SHORT).seconds(),
-
+                HideBitnamiBanner.ifPresent(),
                 Click.on(CheckoutUI.GUEST_RADIO_BUTTON),
 
                 WaitUntil.the(CheckoutUI.STEP_1_CONTINUE_BUTTON, isClickable()),

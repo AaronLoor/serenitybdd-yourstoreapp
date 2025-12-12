@@ -22,6 +22,7 @@ public class AcceptTermsAndProceed implements Task {
                 WaitUntil.the(CheckoutUI.TERMS_CHECKBOX, isClickable())
                         .forNoMoreThan(AppConstants.Timeouts.SHORT).seconds(),
                 Click.on(CheckoutUI.TERMS_CHECKBOX),
+                HideBitnamiBanner.ifPresent(),
                 Click.on(CheckoutUI.BUTTON_CONTINUE_PAYMENT)
         );
     }
